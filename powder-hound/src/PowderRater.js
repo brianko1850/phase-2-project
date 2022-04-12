@@ -2,9 +2,7 @@ import React from "react";
 
 function PowderRater() {
     return (
-        <div>
-            PowderRater
-        </div>
+    <h1>PowderRater</h1>
     )
 }
 
