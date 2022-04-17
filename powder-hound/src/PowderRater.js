@@ -2,7 +2,7 @@ import React from "react";
 
 function PowderRater() {
     return (
-    <h1>PowderRater</h1>
+    <h1>Powder Rater</h1>
     )
 }
 
