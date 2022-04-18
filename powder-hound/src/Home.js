@@ -3,7 +3,7 @@ import Select from 'react-select'
 
 
 function Home() {
-    const [query, setQuery] = useState("query")
+    const [query, setQuery] = useState("81657")
     const [weather, setWeather] = useState({})
 
     console.log(query.value)
@@ -24,13 +24,16 @@ function Home() {
         }
     };
  
-    const getWeather = () =>{
-    fetch(`https://weatherapi-com.p.rapidapi.com/current.json?q=${query}`, options)
+    const getWeather = (newQuery) =>{
+
+        setQuery(newQuery);
+    fetch(`https://weatherapi-com.p.rapidapi.com/current.json?q=${newQuery.value}`, options)
         .then(response => response.json())
         .then(response => {
             console.log(response)
+            console.log(response.current.condition.text)
             setWeather(response)
-            setQuery('')
+
         })
         .catch(err => console.error(err));
     }
@@ -50,7 +53,8 @@ function Home() {
                     <Select options={selectOptions}
                     placeholder="select a resort"
                     isSearchable
-                    onChange={setQuery}
+                    onChange={getWeather
+                }
                     />
                 </div>
                 <div className="location-box">
@@ -59,10 +63,10 @@ function Home() {
                 </div>
                 <div className="weather-box">
                     <div className="temp">
-                    {query.label}
+                    {weather.current.temp_c}°C
                     </div>
                     <div className="weather">
-                        snow
+                        {weather.current.condition.text}
                     </div>
                 </div>
             </main>
