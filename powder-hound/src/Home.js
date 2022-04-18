@@ -3,8 +3,10 @@ import Select from 'react-select'
 
 
 function Home() {
-    const [query, setQuery] = useState("")
+    const [query, setQuery] = useState("query")
     const [weather, setWeather] = useState({})
+
+    console.log(query.value)
 
     const selectOptions = [
         {value:"81657", label: 'Vail'},
@@ -21,8 +23,8 @@ function Home() {
             'X-RapidAPI-Key': 'f537c8cd0emsh8417a5503e8f86cp1683dejsnade5a97d2370'
         }
     };
-   const search = evt => {
-       if (evt.key === "Selected") {
+ 
+    const getWeather = () =>{
     fetch(`https://weatherapi-com.p.rapidapi.com/current.json?q=${query}`, options)
         .then(response => response.json())
         .then(response => {
@@ -31,7 +33,6 @@ function Home() {
             setQuery('')
         })
         .catch(err => console.error(err));
-    }
     }
 
     const dateBuilder = (d) => {
@@ -47,15 +48,18 @@ function Home() {
             <main>
                 <div className="search-box">
                     <Select options={selectOptions}
-                    onSelect={search}/>
+                    placeholder="select a resort"
+                    isSearchable
+                    onChange={setQuery}
+                    />
                 </div>
                 <div className="location-box">
-                    <div className="location">Vail</div>
+                    <div className="location">{query.label}</div>
                     <div className="date">{dateBuilder(new Date())}</div>
                 </div>
                 <div className="weather-box">
                     <div className="temp">
-                        15c
+                    {query.label}
                     </div>
                     <div className="weather">
                         snow
@@ -65,6 +69,7 @@ function Home() {
         
         </>
     )
+
 }
 
 export default Home
